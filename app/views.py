@@ -6,5 +6,8 @@ from django.http import HttpResponse
 def django_form(request):
     form=NameForm()
     d={'form':form}
-    
+    if request.method=='POST':
+        fd=NameForm(request.POST)
+        if fd.is_valid():
+            return HttpResponse(str(fd.cleaned_data))
     return render(request,'django_form.html',d)
